@@ -19,7 +19,13 @@
         </h1>
         <button onclick="startClick();">Start</button>
         <button onclick="stopClick();">Stop</button>
-        <button onclick="resetClick();">Reset</button>
+        <button onclick="resetClick();">Reset</button><br>
+        <h1>
+          <span id="chrs" style="font-size: 40px">00</span><span id="cmins" style="font-size: 40px">00</span><span id="AMPM" style="font-size: 40px"> AM </span>  <span id="csecs" onchange="document.getElementById('myAudio').play();" style="font-size: 40px">00</span><span style="font-size: 40px"></span><span id="cmsecs" style="font: 25px;">00</span>
+        </h1>
+        <h1>
+          <span id="dateDate" style="font-size: 40px">00</span><span id="dateMonth" style="font-size: 40px">00</span><span id="dateYear" style="font-size: 40px">00</span><span id="dateDay" style="font-size: 40px">00</span>
+        </h1>
       </section>
     </center>
   </body>
@@ -30,7 +36,7 @@
     let secsTimer = 0;
     let minsTimer = 0;
     let hrsTimer = 0;
-    function doSomething() {
+    function stopWatchAction() {
       ++msecsTimer;
       if (msecsTimer == 100) {
         document.getElementById("myAudio").play();
@@ -72,7 +78,7 @@
     function startClick() {
       if (started === 0) {
         started = 1;
-        startTimer = setInterval(doSomething, 10);
+        startTimer = setInterval(stopWatchAction, 10);
       }
     }
     function stopClick() {
@@ -90,5 +96,45 @@
       document.getElementById("mins").innerText = "00";
       document.getElementById("hrs").innerText = "00";
     }
+    let clockTime;
+    let clockHour;
+    let clockMin;
+    let clockSec;
+    let clockmSec;
+    let clockDay;
+    let clockMonth;
+    let clockYear;
+    let displayMonth = ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    let displayDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    
+    function clockAction() {
+    clockTime = new Date();
+    clockHour = clockTime.getHours();
+    clockMin = clockTime.getMinutes();
+    clockSec = clockTime.getSeconds();
+    clockmSec = clockTime.getMilliseconds();
+    clockDate = clockTime.getDate();
+    clockMonth = clockTime.getMonth();
+    clockYear = clockTime.getFullYear();
+    clockDay = clockTime.getDay();
+    
+    document.getElementById("cmsecs").innerText = clockmSec.toString().padStart(3,"0");
+    document.getElementById("csecs").innerText = clockSec.toString().padStart(2,"0");
+    document.getElementById("cmins").innerText = clockMin.toString().padStart(2,"0");
+      if (clockHour < 12) {
+        document.getElementById("chrs").innerText = `${clockHour.toString().padStart(2,"0")}:`;
+        document.getElementById("AMPM").innerText = ` AM `;
+      } else {
+        document.getElementById("chrs").innerText = `${(clockHour-12).toString().padStart(2,"0")}:`;
+        document.getElementById("AMPM").innerText = ` PM `;
+      }
+    document.getElementById("dateDate").innerText = ` ${clockDate} `;
+    document.getElementById("dateMonth").innerText = ` ${displayMonth[clockMonth]} `;
+    document.getElementById("dateYear").innerText = ` ${clockYear}, `;
+    document.getElementById("dateDay").innerText = ` ${displayDay[clockDay]} `;
+
+
+    }
+    startClock = setInterval(clockAction, 10);
   </script>
 </html>
