@@ -11,7 +11,11 @@
     }
     select{
       font-family: Arial, Helvetica, sans-serif;
-      font-size: 40px;
+      font-size: 30px;
+    }
+    button{
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 20px;
     }
   </style>
   <body>
@@ -21,33 +25,44 @@
     <audio id="timerRing" src="assets/timerRing.mp3" type="mp3"></audio>
     <audio id="tictac" src="assets/tictac.mp3" type="mp3"></audio>
     <audio id="tictacOld" src="assets/tictacOld.mp3" type="mp3"></audio>
+    <audio id="alarmClockSound" src="assets/AlarmClock.mp3" type="mp3"></audio>
     <center>
       <section class="timer">
         <br><br>
-        <h1 style="font-family: Arial, Helvetica, sans-serif; font-size: 50;"><u>Stop Watch</u></h1>
+        <h1 style="font-family: Arial, Helvetica, sans-serif; font-size: 30px;"><u>Stop Watch</u></h1>
         <h1>
           <span id="hrs" style="font-size: 40px">00</span><span style="font-size: 40px">h : </span><span id="mins" style="font-size: 40px">00</span><span style="font-size: 40px">m : </span><span id="secs" style="font-size: 40px">00</span><span style="font-size: 40px">s </span><span id="msecs" style="font: 25px;">00</span>
         </h1>
         <button onclick="startClick();">Start</button>
         <button onclick="stopClick();">Stop</button>
         <button onclick="resetClick();">Reset</button><br>
-        <h1><br><br><br>
+        <h1><br>
           <span id="chrs" style="font-size: 40px">00</span><span id="cmins" style="font-size: 40px">00</span><span id="AMPM" style="font-size: 40px"> AM </span>  <span id="csecs" style="font-size: 40px;">00</span><span style="font-size: 40px"> </span><span id="cmsecs" style="font: 25px;">000</span>
         </h1>
         <h1>
           <span id="dateDay" style="font-size: 40px">00</span><span id="dateDate" style="font-size: 40px">00</span><span id="dateMonth" style="font-size: 40px">00</span><span id="dateYear" style="font-size: 40px">00</span>
-        </h1><br><br><br>
-        <h1 style="font-family: Arial, Helvetica, sans-serif; font-size: 50;"><u>Timer</u></h1>
-        <span id="thrs" style="font-size: 40px">00</span><span style="font-size: 40px">h : </span><span id="tmins" style="font-size: 40px">00</span><span style="font-size: 40px">m : </span><span id="tsecs" style="font-size: 40px">00</span><span style="font-size: 40px">s : </span><span id="tmsecs" style="font: 25px;">00</span>
+        </h1>
+        <h1>
+          <h1 style="font-family: Arial, Helvetica, sans-serif; font-size: 30px;"><u>Alarm</u></h1>
+          <select name="alarmHour" id="alarmHour">
+          </select>
+          <span style="font-size: 30px;">:</span>
+          <select name="alarmMinute" id="alarmMinute">
+          </select> 
+          <select name="alarmAMPM" id="alarmAMPM">
+          </select>
+          <button id="setAlarm" onclick="setClockAlarm();" >Set Alarm</button>
+          <button id="stopAlarm" onclick="stopClockAlarm();" >Stop Alarm</button>
+        </h1>
+        <br><br>
+        <h1 style="font-family: Arial, Helvetica, sans-serif; font-size: 30px;"><u>Timer</u></h1>
+        <span id="thrs" style="font-size: 40px">00</span><span style="font-size: 40px">h : </span><span id="tmins" style="font-size: 40px">00</span><span style="font-size: 40px">m : </span><span id="tsecs" style="font-size: 40px">00</span><span style="font-size: 40px">s </span><span id="tmsecs" style="font: 25px;">00</span>
         <h1>
           <select name="timerHour" id="timerHour" onchange="setTimer()">
-
           </select> Hr
           <select name="timerMinute" id="timerMinute" onchange="setTimer()">
-
           </select> Min
           <select name="timerSecond" id="timerSecond" onchange="setTimer()">
-
           </select> Sec
         </h1>
         <h1>
@@ -114,6 +129,42 @@
     }
 
 //Clock logic
+    let clockAlarm = 0;
+    let alarmHourSelect = document.getElementById("alarmHour");
+    let alarmMinuteSelect = document.getElementById("alarmMinute");
+    let alarmAMPMSelect = document.getElementById("alarmAMPM");
+    function populateAlarm(){
+      for(let i=1; i<=12; i++){
+        let alarmHourOption = new Option();
+        alarmHourOption.value = i;
+        alarmHourOption.innerText = i.toString().padStart(2, "0");
+        alarmHourSelect.appendChild(alarmHourOption);
+      }
+      for(let i=0; i<60; i++){
+        let alarmMinuteOption = new Option();
+        alarmMinuteOption.value = i;
+        alarmMinuteOption.innerText = i.toString().padStart(2, "0");
+        alarmMinuteSelect.appendChild(alarmMinuteOption);
+      }
+      let alarmAMOption = new Option();
+      alarmAMOption.value = " AM ";
+      alarmAMOption.innerText = " AM ";
+      alarmAMPMSelect.appendChild(alarmAMOption);
+      let alarmPMOption = new Option();
+      alarmPMOption.value = " PM ";
+      alarmPMOption.innerText = " PM ";
+      alarmAMPMSelect.appendChild(alarmPMOption);
+    }
+    populateAlarm();
+
+    function setClockAlarm(){
+      clockAlarm = 1;
+    }
+    function stopClockAlarm(){
+      clockAlarm = 0;
+      document.getElementById("alarmClockSound").play();
+    }
+
     let clockTime;
     let clockHour;
     let clockMin;
@@ -125,6 +176,7 @@
     let prevSec;
     let displayMonth = ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     let displayDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    
     function clockAction() {
       clockTime = new Date();
       clockHour = clockTime.getHours();
@@ -147,16 +199,24 @@
 
       document.getElementById("cmins").innerText = clockMin.toString().padStart(2,"0");
       if (clockHour < 12) {
-        document.getElementById("chrs").innerText = `${clockHour.toString().padStart(2,"0")}:`;
         document.getElementById("AMPM").innerText = ` AM `;
       } else {
-        document.getElementById("chrs").innerText = `${(clockHour-12).toString().padStart(2,"0")}:`;
+        clockHour = clockHour-12;
         document.getElementById("AMPM").innerText = ` PM `;
       }
+      document.getElementById("chrs").innerText = `${clockHour.toString().padStart(2,"0")}:`;
       document.getElementById("dateDate").innerText = ` ${clockDate} `;
       document.getElementById("dateMonth").innerText = ` ${displayMonth[clockMonth]} `;
       document.getElementById("dateYear").innerText = ` ${clockYear}`;
       document.getElementById("dateDay").innerText = ` ${displayDay[clockDay]}, `;
+
+      if(clockAlarm == 1 && 
+      document.getElementById("alarmHour").value == clockHour && 
+      document.getElementById("alarmMinute").value == clockMin 
+      && document.getElementById("alarmAMPM").value == document.getElementById("AMPM").innerText
+      ){
+        document.getElementById("alarmClockSound").play();
+      }
     }
     startClock = setInterval(clockAction, 10);
 
