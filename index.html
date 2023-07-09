@@ -9,93 +9,107 @@
     .timer {
       font-family:'Courier New', Courier, monospace;
     }
+    select{
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 40px;
+    }
   </style>
   <body>
-    <audio id="myAudio" src="assets/tick-tok.mp3" type="mp3"></audio>
+    <audio id="stopWatchAudio" muted autoplay src="assets/tick-tok.mp3" type="mp3"></audio>
+    <audio id="clockTicAudio" muted autoplay src="assets/tick-tok.mp3" type="mp3"></audio>
     <center>
       <section class="timer">
+        <br><br>
+        <h1 style="font-family: Arial, Helvetica, sans-serif; font-size: 50;"><u>Stop Watch</u></h1>
         <h1>
-          <span id="hrs" style="font-size: 40px">00</span><span style="font-size: 40px">h : </span><span id="mins" style="font-size: 40px">00</span><span style="font-size: 40px">m : </span><span id="secs" style="font-size: 40px">00</span><span style="font-size: 40px">s : </span><span id="msecs" style="font: 25px;">00</span>
+          <span id="hrs" style="font-size: 40px">00</span><span style="font-size: 40px">h : </span><span id="mins" style="font-size: 40px">00</span><span style="font-size: 40px">m : </span><span id="secs" style="font-size: 40px">00</span><span style="font-size: 40px">s </span><span id="msecs" style="font: 25px;">00</span>
         </h1>
         <button onclick="startClick();">Start</button>
         <button onclick="stopClick();">Stop</button>
         <button onclick="resetClick();">Reset</button><br>
-        <h1>
-          <span id="chrs" style="font-size: 40px">00</span><span id="cmins" style="font-size: 40px">00</span><span id="AMPM" style="font-size: 40px"> AM </span>  <span id="csecs" onchange="document.getElementById('myAudio').play();" style="font-size: 40px">00</span><span style="font-size: 40px"></span><span id="cmsecs" style="font: 25px;">00</span>
+        <h1><br><br><br>
+          <span id="chrs" style="font-size: 40px">00</span><span id="cmins" style="font-size: 40px">00</span><span id="AMPM" style="font-size: 40px"> AM </span>  <span id="csecs" style="font-size: 40px;">00</span><span style="font-size: 40px"> </span><span id="cmsecs" style="font: 25px;">000</span>
         </h1>
         <h1>
-          <span id="dateDate" style="font-size: 40px">00</span><span id="dateMonth" style="font-size: 40px">00</span><span id="dateYear" style="font-size: 40px">00</span><span id="dateDay" style="font-size: 40px">00</span>
+          <span id="dateDay" style="font-size: 40px">00</span><span id="dateDate" style="font-size: 40px">00</span><span id="dateMonth" style="font-size: 40px">00</span><span id="dateYear" style="font-size: 40px">00</span>
+        </h1><br><br><br>
+        <h1 style="font-family: Arial, Helvetica, sans-serif; font-size: 50;"><u>Timer</u></h1>
+        <span id="thrs" style="font-size: 40px">00</span><span style="font-size: 40px">h : </span><span id="tmins" style="font-size: 40px">00</span><span style="font-size: 40px">m : </span><span id="tsecs" style="font-size: 40px">00</span><span style="font-size: 40px">s : </span><span id="tmsecs" style="font: 25px;">00</span>
+        <h1>
+          <select name="timerHour" id="timerHour" onchange="setTimer()">
+
+          </select> Hr
+          <select name="timerMinute" id="timerMinute" onchange="setTimer()">
+
+          </select> Min
+          <select name="timerSecond" id="timerSecond" onchange="setTimer()">
+
+          </select> Sec
+        </h1>
+        <h1>
+          <button id="startTimer" onclick="startTimerClick()">Start</button>
+          <button id="stopTimer" onclick="stopTimerClick()">Stop</button>
+          <button id="resetTimer" onclick="resetTimerClick()">Reset</button>
         </h1>
       </section>
     </center>
   </body>
   <script>
-    let startTimer;
+  //Stop watch logic.
+    let startStopWatch;
+    let timerInterval;
     let started = 0;
-    let msecsTimer = 0;
-    let secsTimer = 0;
-    let minsTimer = 0;
-    let hrsTimer = 0;
+    let msecsStopW = 0;
+    let secsStopW = 0;
+    let minsStopW = 0;
+    let hrsStopW = 0;
     function stopWatchAction() {
-      ++msecsTimer;
-      if (msecsTimer == 100) {
-        document.getElementById("myAudio").play();
-        msecsTimer = 0;
-        ++secsTimer;
-        if (secsTimer == 60) {
-          secsTimer = 0;
-          ++minsTimer;
-          if (minsTimer == 60) {
-            minsTimer = 0;
-            ++minsTimer;
-            if (hrsTimer == 24) {
-              hrsTimer = 0;
+      ++msecsStopW;
+      if (msecsStopW == 100) {
+        document.getElementById("stopWatchAudio").play();
+        msecsStopW = 0;
+        ++secsStopW;
+        if (secsStopW == 60) {
+          secsStopW = 0;
+          ++minsStopW;
+          if (minsStopW == 60) {
+            minsStopW = 0;
+            ++hrsStopW;
+            if (hrsStopW == 24) {
+              hrsStopW = 0;
             }
           }
         }
       }
-      if (msecsTimer < 10) {
-        document.getElementById("msecs").innerText = `0${msecsTimer}`;
-      } else {
-        document.getElementById("msecs").innerText = msecsTimer;
-      }
-      if (secsTimer < 10) {
-        document.getElementById("secs").innerText = `0${secsTimer}`;
-      } else {
-        document.getElementById("secs").innerText = secsTimer;
-      }
-      if (minsTimer < 10) {
-        document.getElementById("mins").innerText = `0${minsTimer}`;
-      } else {
-        document.getElementById("mins").innerText = minsTimer;
-      }
-      if (hrsTimer < 10) {
-        document.getElementById("hrs").innerText = `0${hrsTimer}`;
-      } else {
-        document.getElementById("hrs").innerText = hrsTimer;
-      }
+
+        document.getElementById("msecs").innerText = msecsStopW.toString().padStart(2, "0");
+        document.getElementById("secs").innerText = secsStopW.toString().padStart(2, "0");
+        document.getElementById("mins").innerText = minsStopW.toString().padStart(2, "0");
+        document.getElementById("hrs").innerText = hrsStopW.toString().padStart(2, "0");
     }
     function startClick() {
       if (started === 0) {
         started = 1;
-        startTimer = setInterval(stopWatchAction, 10);
+        startStopWatch = setInterval(stopWatchAction, 10);
       }
     }
     function stopClick() {
       if (started === 1) {
         started = 0;
-        clearInterval(startTimer);
+        clearInterval(startStopWatch);
       }
     }
     function resetClick() {
       started = 0;
-      clearInterval(startTimer);
-      msecsTimer = secsTimer = minsTimer = hrsTimer = 0;
+      clearInterval(startStopWatch);
+      msecsStopW = secsStopW = minsStopW = hrsStopW = 0;
       document.getElementById("msecs").innerText = "00";
       document.getElementById("secs").innerText = "00";
       document.getElementById("mins").innerText = "00";
       document.getElementById("hrs").innerText = "00";
     }
+
+//Clock logic
     let clockTime;
     let clockHour;
     let clockMin;
@@ -104,23 +118,30 @@
     let clockDay;
     let clockMonth;
     let clockYear;
+    let prevSec;
     let displayMonth = ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     let displayDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    
     function clockAction() {
-    clockTime = new Date();
-    clockHour = clockTime.getHours();
-    clockMin = clockTime.getMinutes();
-    clockSec = clockTime.getSeconds();
-    clockmSec = clockTime.getMilliseconds();
-    clockDate = clockTime.getDate();
-    clockMonth = clockTime.getMonth();
-    clockYear = clockTime.getFullYear();
-    clockDay = clockTime.getDay();
-    
-    document.getElementById("cmsecs").innerText = clockmSec.toString().padStart(3,"0");
-    document.getElementById("csecs").innerText = clockSec.toString().padStart(2,"0");
-    document.getElementById("cmins").innerText = clockMin.toString().padStart(2,"0");
+      clockTime = new Date();
+      clockHour = clockTime.getHours();
+      clockMin = clockTime.getMinutes();
+      clockSec = clockTime.getSeconds();
+      clockmSec = clockTime.getMilliseconds();
+      clockDate = clockTime.getDate();
+      clockMonth = clockTime.getMonth();
+      clockYear = clockTime.getFullYear();
+      clockDay = clockTime.getDay();
+      
+      document.getElementById("cmsecs").innerText = clockmSec.toString().padStart(3,"0");
+      document.getElementById("csecs").innerText = clockSec.toString().padStart(2,"0");
+      console.log(clockSec, prevSec);
+      if(clockSec != prevSec && started == 0){
+        document.getElementById("clockTicAudio").muted = false;
+        document.getElementById("clockTicAudio").play();
+      }
+      prevSec = clockSec;
+
+      document.getElementById("cmins").innerText = clockMin.toString().padStart(2,"0");
       if (clockHour < 12) {
         document.getElementById("chrs").innerText = `${clockHour.toString().padStart(2,"0")}:`;
         document.getElementById("AMPM").innerText = ` AM `;
@@ -128,13 +149,106 @@
         document.getElementById("chrs").innerText = `${(clockHour-12).toString().padStart(2,"0")}:`;
         document.getElementById("AMPM").innerText = ` PM `;
       }
-    document.getElementById("dateDate").innerText = ` ${clockDate} `;
-    document.getElementById("dateMonth").innerText = ` ${displayMonth[clockMonth]} `;
-    document.getElementById("dateYear").innerText = ` ${clockYear}, `;
-    document.getElementById("dateDay").innerText = ` ${displayDay[clockDay]} `;
-
-
+      document.getElementById("dateDate").innerText = ` ${clockDate} `;
+      document.getElementById("dateMonth").innerText = ` ${displayMonth[clockMonth]} `;
+      document.getElementById("dateYear").innerText = ` ${clockYear}`;
+      document.getElementById("dateDay").innerText = ` ${displayDay[clockDay]}, `;
     }
     startClock = setInterval(clockAction, 10);
+
+//Timer logic
+    let timerHourSelect = document.getElementById("timerHour");
+    let timerMinuteSelect = document.getElementById("timerMinute");
+    let timerSecondSelect = document.getElementById("timerSecond");
+    function populateTimer(){
+      for(let i=0; i<24; i++){
+        let hourOption = new Option();
+        hourOption.value = i;
+        hourOption.innerText = i.toString().padStart(2, "0");
+        timerHourSelect.appendChild(hourOption);
+      }
+      for(let i=0; i<60; i++){
+        let minuteOption = new Option();
+        minuteOption.value = i;
+        minuteOption.innerText = i.toString().padStart(2, "0");
+        timerMinuteSelect.appendChild(minuteOption);
+      }
+      for(let i=0; i<60; i++){
+        let secondOption = new Option();
+        secondOption.value = i;
+        secondOption.innerText = i.toString().padStart(2, "0");
+        timerSecondSelect.appendChild(secondOption);
+      }
+    }
+    populateTimer();
+
+    let msecsTimer = 0;
+    let secsTimer = 0;
+    let minsTimer = 0;
+    let hrsTimer = 0;
+
+    function timerAction() {
+      if (msecsTimer == 0) {
+        //document.getElementById("stopWatchAudio").play();
+        msecsTimer = 100;
+        if (secsTimer == 0) {
+          secsTimer = 60;
+          if (minsTimer == 0) {
+            minsTimer = 60;
+            if (document.getElementById("thrs").innerText == "00" && document.getElementById("tmins").innerText == "00" && document.getElementById("tsecs").value == "00") {
+              started = 0;
+              clearInterval(timerInterval);
+              return 0;
+            }
+            --hrsTimer;
+            // if (hrsTimer == 0) {
+            //   //hrsTimer = 24;
+            // }
+          }
+          --minsTimer;
+        }
+        --secsTimer;
+      }
+      --msecsTimer;
+
+      document.getElementById("tmsecs").innerText = msecsTimer.toString().padStart(2, "0");
+      document.getElementById("tsecs").innerText = secsTimer.toString().padStart(2, "0");
+      document.getElementById("tmins").innerText = minsTimer.toString().padStart(2, "0");
+      document.getElementById("thrs").innerText = hrsTimer.toString().padStart(2, "0");
+    }
+
+    function startTimerClick() {
+      if (started === 0) {
+        started = 1;
+        msecsTimer = 0;
+        secsTimer = document.getElementById("tsecs").innerText;
+        minsTimer = document.getElementById("tmins").innerText;
+        hrsTimer = document.getElementById("thrs").innerText;
+        timerInterval = setInterval(timerAction, 10);
+      }
+    }
+
+    function stopTimerClick() {
+      if (started === 1) {
+        started = 0;
+        clearInterval(timerInterval);
+      }
+    }
+
+    function resetTimerClick() {
+      started = 0;
+      clearInterval(timerInterval);
+      msecsTimer = secsTimer = minsTimer = hrsTimer = 0;
+      document.getElementById("tmsecs").innerText = "00";
+      document.getElementById("timerSecond").value = "00";
+      document.getElementById("timerMinute").value = "00";
+      document.getElementById("timerHour").value = "00";
+    }
+
+    function setTimer(){
+      document.getElementById("tsecs").innerText = document.getElementById("timerSecond").value.toString().padStart(2, "0");
+      document.getElementById("tmins").innerText = document.getElementById("timerMinute").value.toString().padStart(2, "0");
+      document.getElementById("thrs").innerText = document.getElementById("timerHour").value.toString().padStart(2, "0");
+    }
   </script>
 </html>
