@@ -15,8 +15,12 @@
     }
   </style>
   <body>
-    <audio id="stopWatchAudio" muted autoplay src="assets/tick-tok.mp3" type="mp3"></audio>
-    <audio id="clockTicAudio" muted autoplay src="assets/tick-tok.mp3" type="mp3"></audio>
+    <audio id="stopWatchAudio" src="assets/tick-tok.mp3" type="mp3"></audio>
+    <audio id="clockTicAudio" src="assets/tick-tok.mp3" type="mp3"></audio>
+    <audio id="timerOver" src="assets/timerOver.mp3" type="mp3"></audio>
+    <audio id="timerRing" src="assets/timerRing.mp3" type="mp3"></audio>
+    <audio id="tictac" src="assets/tictac.mp3" type="mp3"></audio>
+    <audio id="tictacOld" src="assets/tictacOld.mp3" type="mp3"></audio>
     <center>
       <section class="timer">
         <br><br>
@@ -188,29 +192,31 @@
     let hrsTimer = 0;
 
     function timerAction() {
-      if (msecsTimer == 0) {
-        //document.getElementById("stopWatchAudio").play();
-        msecsTimer = 100;
-        if (secsTimer == 0) {
-          secsTimer = 60;
-          if (minsTimer == 0) {
-            minsTimer = 60;
-            if (document.getElementById("thrs").innerText == "00" && document.getElementById("tmins").innerText == "00" && document.getElementById("tsecs").value == "00") {
-              started = 0;
-              clearInterval(timerInterval);
-              return 0;
+      if (hrsTimer == 0 && minsTimer == 0 && secsTimer == 0 && msecsTimer == 0) {
+        started = 0;
+        clearInterval(timerInterval);
+        document.getElementById("timerOver").play();
+        return 0;
+      }else{
+        if (msecsTimer == 0) {
+          //document.getElementById("stopWatchAudio").play();
+          msecsTimer = 100;
+          if (secsTimer == 0) {
+            secsTimer = 60;
+            if (minsTimer == 0) {
+              minsTimer = 60;
+              --hrsTimer;
+              // if (hrsTimer == 0) {
+              //   //hrsTimer = 24;
+              // }
             }
-            --hrsTimer;
-            // if (hrsTimer == 0) {
-            //   //hrsTimer = 24;
-            // }
+            --minsTimer;
           }
-          --minsTimer;
+          document.getElementById("tictacOld").play();
+          --secsTimer;
         }
-        --secsTimer;
-      }
-      --msecsTimer;
-
+        --msecsTimer;
+    }
       document.getElementById("tmsecs").innerText = msecsTimer.toString().padStart(2, "0");
       document.getElementById("tsecs").innerText = secsTimer.toString().padStart(2, "0");
       document.getElementById("tmins").innerText = minsTimer.toString().padStart(2, "0");
