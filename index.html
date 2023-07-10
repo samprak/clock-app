@@ -312,9 +312,11 @@
     }
 
     function setTimer(){
-      document.getElementById("tsecs").innerText = document.getElementById("timerSecond").value.toString().padStart(2, "0");
-      document.getElementById("tmins").innerText = document.getElementById("timerMinute").value.toString().padStart(2, "0");
-      document.getElementById("thrs").innerText = document.getElementById("timerHour").value.toString().padStart(2, "0");
+      if(started == 0){
+        document.getElementById("tsecs").innerText = document.getElementById("timerSecond").value.toString().padStart(2, "0");
+        document.getElementById("tmins").innerText = document.getElementById("timerMinute").value.toString().padStart(2, "0");
+        document.getElementById("thrs").innerText = document.getElementById("timerHour").value.toString().padStart(2, "0");
+      }
     }
   </script>
 </html>
