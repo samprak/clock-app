@@ -8,38 +8,52 @@
         #rectangle{
             width : 100px;
             height : 50px;
-            background-color: gray;
+            background-color: rgb(55, 237, 222);
         }
         #square{
             width : 50px;
             height : 50px;
-            background-color: red;
+            background-color: rgb(255, 47, 0);
         }
         #circle{
             width : 50px;
             height : 50px;
             border-radius: 50%;
-            background-color: yellowgreen;
+            background-color: gold;
         }
         #oval{
             width : 100px;
             height : 50px;
             border-radius: 50%;
-            background-color: lightgray;
+            background-color: lightskyblue;
         }
         #parallelogram{
-            width : 100px;
-            height : 50px;
-            background-color: indigo;
+            width : 0px;
+            height : 0px;
+            border-left: 30px solid transparent;
+            border-right: 30px solid rgb(215, 158, 255);
+            border-bottom: 100px solid rgb(215, 158, 255);
+        }
+        #parallelogram1{
+            width : 0px;
+            height : 0px;
+            border-left: 30px solid rgb(215, 158, 255);
+            border-right: 30px solid transparent;
+            border-top: 100px solid rgb(215, 158, 255);
         }
         #triangle{
-            width : 50px;
-            height : 50px;
-            background-color: indigo;
+            width: 0; 
+            height: 0; 
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent; 
+            border-bottom: 50px solid rgb(66, 113, 255);
+        }
+        table{
+            border-collapse: collapse;
         }
     </style>
 </head>
-<body>
+<body style="font-family:Arial, Helvetica, sans-serif;">
     <center>
         <h1>Rectangle</h1>
         <div id="rectangle"></div>
@@ -50,11 +64,29 @@
         <h1>Oval</h1>
         <div id="oval"></div>
         <h1>Parallelogram</h1>
-        <div id="parallelogram"></div>
+        <table>
+            <tr>
+                <td align="right" style="padding-right: 0px;">
+                    <div id="parallelogram"></div>
+                </td>
+                <td align="left" style="padding-left: 0px;">
+                    <div id="parallelogram1"></div>
+                </td>
+            </tr>
+        </table>
         <h1>Triangle</h1>
         <div id="triangle"></div>
         <h1>Trapezoid</h1>
-        <div id="trapezoid"></div>
+        <table>
+            <tr>
+                <td align="right" style="padding-right: 0px;">
+                    <div id="trapezoid"></div>
+                </td>
+                <td align="left" style="padding-left: 0px;">
+                    <div id="trapezoid1"></div>
+                </td>
+            </tr>
+        </table>
     </center>
 </body>
 <script>
@@ -64,6 +96,9 @@
         if( rWidth <= 1024){
             rWidth += 2*rWidth/100;
             rHeight += 2*rHeight/100;
+            rHeight60 = rHeight * 0.6;
+            rWidth60 = rWidth * 0.6;
+            rHeight30 = rHeight * 0.3;
             document.getElementById("rectangle").style.width = rWidth + "px";
             document.getElementById("rectangle").style.height = rHeight + "px";
             document.getElementById("oval").style.width = rWidth + "px";
@@ -72,6 +107,29 @@
             document.getElementById("circle").style.height = rHeight + "px";
             document.getElementById("square").style.width = rHeight + "px";
             document.getElementById("square").style.height = rHeight + "px";
+            document.getElementById("triangle").style.borderRight = rHeight60+ "px solid transparent";
+            document.getElementById("triangle").style.borderLeft = rHeight60 + "pxsolid transparent";
+            document.getElementById("triangle").style.borderLeft = rHeight60+ "px solid transparent";
+            document.getElementById("triangle").style.borderRight = rHeight60 + "pxsolid transparent";
+            document.getElementById("triangle").style.borderBottom = rHeight + "px solid rgb(66, 113, 255)";
+            document.getElementById("triangle").style.borderBottom = rHeight + "px solid rgb(66, 113, 255)";
+            document.getElementById("parallelogram").style.borderLeft = rWidth60 + "px solid transparent";
+            document.getElementById("parallelogram").style.borderLeft = rWidth60+ "px solid transparent";
+            document.getElementById("parallelogram").style.borderBottom = rHeight + "px solid rgb(215, 158, 255)";
+            document.getElementById("parallelogram").style.borderBottom = rHeight + "px solid rgb(215, 158, 255)";
+            document.getElementById("parallelogram1").style.borderRight = rWidth60+ "px solid transparent";
+            document.getElementById("parallelogram1").style.borderRight = rWidth60 + "px solid transparent";
+            document.getElementById("parallelogram1").style.borderTop = rHeight + "px solid rgb(215, 158, 255)";
+            document.getElementById("parallelogram1").style.borderTop = rHeight + "px solid rgb(215, 158, 255)";
+            document.getElementById("trapezoid").style.borderLeft = rHeight30 + "px solid transparent";
+            document.getElementById("trapezoid").style.borderLeft = rHeight30+ "px solid transparent";
+            document.getElementById("trapezoid").style.borderRight = rHeight30+ "px solid peachpuff";
+            document.getElementById("trapezoid").style.borderBottom = rHeight60 + "px solid peachpuff";
+            document.getElementById("trapezoid1").style.borderRight = rHeight30 + "px solid transparent";
+            document.getElementById("trapezoid1").style.borderRight = rHeight30+ "px solid transparent";
+            document.getElementById("trapezoid1").style.borderLeft = rHeight30+ "px solid peachpuff";
+            document.getElementById("trapezoid1").style.borderBottom = rHeight60 + "px solid peachpuff";
+
         }else{
             clearInterval(growRect);
         }
