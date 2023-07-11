@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Polygons</title>
+    <style>
+        #rectangle{
+            width : 100px;
+            height : 50px;
+            background-color: gray;
+        }
+        #square{
+            width : 50px;
+            height : 50px;
+            background-color: red;
+        }
+        #circle{
+            width : 50px;
+            height : 50px;
+            border-radius: 50%;
+            background-color: yellowgreen;
+        }
+        #oval{
+            width : 100px;
+            height : 50px;
+            border-radius: 50%;
+            background-color: lightgray;
+        }
+        #parallelogram{
+            width : 100px;
+            height : 50px;
+            background-color: indigo;
+        }
+        #triangle{
+            width : 50px;
+            height : 50px;
+            background-color: indigo;
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <h1>Rectangle</h1>
+        <div id="rectangle"></div>
+        <h1>Square</h1>
+        <div id="square"></div>
+        <h1>Circle</h1>
+        <div id="circle"></div>
+        <h1>Oval</h1>
+        <div id="oval"></div>
+        <h1>Parallelogram</h1>
+        <div id="parallelogram"></div>
+        <h1>Triangle</h1>
+        <div id="triangle"></div>
+        <h1>Trapezoid</h1>
+        <div id="trapezoid"></div>
+    </center>
+</body>
+<script>
+    function growRectangle(){
+        let rWidth = +getComputedStyle(rectangle).width.split("px")[0];
+        let rHeight = +getComputedStyle(rectangle).height.split("px")[0];
+        if( rWidth <= 1024){
+            rWidth += 2*rWidth/100;
+            rHeight += 2*rHeight/100;
+            document.getElementById("rectangle").style.width = rWidth + "px";
+            document.getElementById("rectangle").style.height = rHeight + "px";
+            document.getElementById("oval").style.width = rWidth + "px";
+            document.getElementById("oval").style.height = rHeight + "px";
+            document.getElementById("circle").style.width = rHeight + "px";
+            document.getElementById("circle").style.height = rHeight + "px";
+            document.getElementById("square").style.width = rHeight + "px";
+            document.getElementById("square").style.height = rHeight + "px";
+        }else{
+            clearInterval(growRect);
+        }
+    }
+    let growRect = setInterval(growRectangle, 100);
+</script>
+</html>
