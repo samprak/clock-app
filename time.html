@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date Algorithms</title>
+</head>
+<body>
+    <section>
+        <center>
+            <h1> <span id="a"></span> ms</h1>
+            <h1> <span id="b"></span> seconds</h1>
+            <h1> <span id="c"></span> minutes</h1>
+            <h1> <span id="d"></span> hours</h1>
+            <h1> <span id="e"></span> days</h1>
+            <h1> <span id="f"></span> weeks</h1>
+            <h1> <span id="g"></span> years</h1>
+            <h1> <span id="dateEntered">Date Entered!</span></h1>
+            <h1> <span id="timeEntered">Time Entered!</span></h1>
+
+            <h1><input id="dateIn" onchange="dateEntered()" type="date"><input id="timeIn" onchange="timeEntered(event)" type="time"></h1>
+        </center>
+    </section>
+</body>
+<script>
+    function main(dateEntered){
+        let date = new Date();
+        let diffDate = date - dateEntered;
+        // document.getElementById("a").innerText = date.getTime()/1000;
+        // document.getElementById("b").innerText = Math.floor(date.getTime()/1000);
+        // document.getElementById("c").innerText = Math.floor(date.getTime()/(1000*60));
+        // document.getElementById("d").innerText = Math.floor(date.getTime()/(1000*60*60));
+        // document.getElementById("e").innerText = Math.floor(date.getTime()/(1000*60*60*24));
+        // document.getElementById("f").innerText = Math.floor(date.getTime()/(1000*60*60*24*7));
+        // document.getElementById("g").innerText = Math.floor(date.getTime()/(1000*60*60*24*7*52));
+        document.getElementById("a").innerText = diffDate;
+        document.getElementById("b").innerText = Math.floor(diffDate/1000);
+        document.getElementById("c").innerText = Math.floor(diffDate/(1000*60));
+        document.getElementById("d").innerText = Math.floor(diffDate/(1000*60*60));
+        document.getElementById("e").innerText = Math.floor(diffDate/(1000*60*60*24));
+        document.getElementById("f").innerText = Math.floor(diffDate/(1000*60*60*24*7));
+        document.getElementById("g").innerText = Math.floor(diffDate/(1000*60*60*24*7*52));
+        
+       
+    }
+    //let callMain = setInterval(main, 1000);
+    let timein = "";
+    let dateFrom = "";
+    function dateEntered(){
+        dateFrom = new Date(document.getElementById("dateIn").value);
+        dateFrom = document.getElementById("dateEntered").innerText = dateFrom.getFullYear() + "-" + (+dateFrom.getMonth()+1) + "-" + dateFrom.getDate();
+        if(!timein){
+            main(dateEntered);
+        }else{
+            let newDate = new Date(Date.parse(dateFrom + timein))
+            main(newDate);
+        }
+    }
+    
+    function timeEntered(){
+        timein = document.getElementById("timeIn").value;
+        timein = document.getElementById("timeEntered").innerText = "T" + timein + ":00";
+    }
+</script>
+</html>

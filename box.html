@@ -25,6 +25,9 @@
             width : 100px;
             height : 50px;
             border-radius: 50%;
+            border-top-left-radius: 50%;
+            border-bottom-left-radius: 50%;
+            
             background-color: lightskyblue;
         }
         #parallelogram{
@@ -129,7 +132,6 @@
             document.getElementById("trapezoid1").style.borderRight = rHeight30+ "px solid transparent";
             document.getElementById("trapezoid1").style.borderLeft = rHeight30+ "px solid peachpuff";
             document.getElementById("trapezoid1").style.borderBottom = rHeight60 + "px solid peachpuff";
-
         }else{
             clearInterval(growRect);
         }
