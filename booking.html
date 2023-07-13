@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking</title>
+    <style>
+        body{
+            background-color: black;
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+            max-width: 80%;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <center>
+            <h1> <span id="a"></span> ms</h1>
+            <h1> <span id="b"></span> seconds</h1>
+            <h1> <span id="c"></span> minutes</h1>
+            <h1> <span id="d"></span> hours</h1>
+            <h1> <span id="e"></span> days</h1>
+            <h1> <span id="f"></span> weeks</h1>
+            <h1> <span id="g"></span> years</h1>
+            <h1> <span id="bookingDetails"></span></h1>
+            <form action="" onsubmit="getBooked(event)" style="width: 40%;">
+                <fieldset>
+                    <legend>Personal Details</legend>
+                    <h1><label for="fname">Name : </label><input id="fname" type="text"></h1>
+                    <h1><label for="bday">Booking : </label><input id="bday" name="bday" max="new Date()" type="datetime-local" required></h1>
+                    <h1><input type="submit" value="Make Booking"></h1>
+                </fieldset>
+            </form>
+        </center>
+    </section>
+</body>
+<script>
+    let callMain;
+    let callMainSet = false;
+    function main(){
+        let date = new Date();
+        let newDate = new Date(document.getElementById("bday").value);
+        let diffDate = newDate - date;
+        let nameSal = document.getElementById("fname").value;
+        document.getElementById("a").innerText = diffDate;
+        document.getElementById("b").innerText = Math.floor(diffDate/1000);
+        document.getElementById("c").innerText = Math.floor(diffDate/(1000*60));
+        document.getElementById("d").innerText = Math.floor(diffDate/(1000*60*60));
+        document.getElementById("e").innerText = Math.floor(diffDate/(1000*60*60*24));
+        document.getElementById("f").innerText = Math.floor(diffDate/(1000*60*60*24*7));
+        document.getElementById("g").innerText = Math.floor(diffDate/(1000*60*60*24*7*52));
+        if (nameSal){
+            nameSal += ", ";
+            document.getElementById("bookingDetails").innerText = nameSal + "your booking is done!!";    
+        }else{
+            document.getElementById("bookingDetails").innerText = "Your booking is done!!";    
+        }
+    }
+
+    function getBooked(event){
+        event.preventDefault();
+        let date = new Date();
+        let newDate = new Date(document.getElementById("bday").value);
+        let diffDate = newDate - date;
+        if((diffDate/(1000*60) < 10) || (diffDate/(1000*60*60*24) > 30)){
+            alert("Booking date cannot be less than 10 mins or greater than 30 days from now!");
+            return 0;   
+        }
+        main()
+    }
+</script>
+</html>

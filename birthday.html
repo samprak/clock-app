@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Age Calculation</title>
+    <style>
+        body{
+            background-color: black;
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+            max-width: 80%;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <center>
+            <h1> <span id="a"></span> ms</h1>
+            <h1> <span id="b"></span> seconds</h1>
+            <h1> <span id="c"></span> minutes</h1>
+            <h1> <span id="d"></span> hours</h1>
+            <h1> <span id="e"></span> days</h1>
+            <h1> <span id="f"></span> weeks</h1>
+            <h1> <span id="g"></span> years</h1>
+            <h1> <span id="dateEntered">Date Entered!</span></h1>
+            <h1> <span id="timeEntered">Time Entered!</span></h1>
+
+            <h1><input id="dateIn" onchange="dateEntered()" type="date"><input id="timeIn" onchange="timeEntered(event)" type="time"></h1>
+            <h1><span id="today"></span></h1>
+            
+            <form action="" onsubmit="getAge(event)" style="width: 40%;">
+                <fieldset>
+                    <legend>Personal Details</legend>
+                    <h1><label for="fname">Name : </label><input type="text"></h1>
+                    <h1><label for="bday">Birthday : </label><input id="bday" name="bday" max="new Date()" type="datetime-local" required></h1>
+                    <h1><input type="submit" value="Know your age!"></h1>
+                </fieldset>
+            </form>
+        </center>
+    </section>
+</body>
+<script>
+    let callMain;
+    let callMainSet = false;
+    function main(dateEntered){
+        let date = new Date();
+        let newDate = new Date(document.getElementById("bday").value);
+        let diffDate = date - newDate;
+        if(diffDate < 0){
+            alert("Birthday cannot be after current time.");
+            return 0;
+        }
+        document.getElementById("a").innerText = diffDate;
+        document.getElementById("b").innerText = Math.floor(diffDate/1000);
+        document.getElementById("c").innerText = Math.floor(diffDate/(1000*60));
+        document.getElementById("d").innerText = Math.floor(diffDate/(1000*60*60));
+        document.getElementById("e").innerText = Math.floor(diffDate/(1000*60*60*24));
+        document.getElementById("f").innerText = Math.floor(diffDate/(1000*60*60*24*7));
+        document.getElementById("g").innerText = Math.floor(diffDate/(1000*60*60*24*7*52));
+        if(!callMainSet){
+            callMain = setInterval(main, 1000, newDate);
+            callMainSet = true;
+            console.log("calling");
+        }
+    }
+    //let callMain = setInterval(main, 1000);
+    let timein = "";
+    let dateFrom = "";
+    function dateEntered(){
+        clearInterval(callMain);
+        dateFrom = new Date(document.getElementById("dateIn").value);
+        dateFrom = document.getElementById("dateEntered").innerText = dateFrom.getFullYear() + "-" + (+dateFrom.getMonth()+1) + "-" + dateFrom.getDate();
+        if(!timein){
+            main(dateEntered);
+        }else{
+            let newDate = new Date(Date.parse(dateFrom + timein))
+            main(newDate);
+        }
+    }
+    
+    function timeEntered(){
+        timein = document.getElementById("timeIn").value;
+        timein = document.getElementById("timeEntered").innerText = "T" + timein + ":00";
+    }
+    document.getElementById("today").innerText = new Date();
+
+    function getAge(event){
+        event.preventDefault();
+        let date = new Date();
+        let newDate = new Date(document.getElementById("bday").value);
+        let diffDate = date - newDate;
+        if(diffDate < 0){
+            alert("Birthday cannot be after current time.");
+            return 0;
+        }
+        main(newDate)
+    }
+</script>
+</html>
