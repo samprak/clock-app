@@ -28,5 +28,23 @@ for(let i=0; i<7; i++){
         divHeight = Math.floor(divWidth/1.62);
     }
 }
+let blinker=0;
+function blinkColors(){
+    for(let i=0; i<7; i++){
+        let divTags = document.getElementById("div"+i);
+        let rRed = Math.floor(Math.random() * 256);
+        let gGreen = Math.floor(Math.random() * 256);
+        let bBlue = Math.floor(Math.random() * 256);
+        if(blinker%2 == 0){
+            //divTags.style.backgroundColor = colorsArr[i];
+            divTags.style.backgroundColor = "rgb(" + rRed + ", " + gGreen + ", " + bBlue + ")";
+        }else{
+            divTags.style.backgroundColor = colorsArr1[i];
+        }
+    }
+    blinker++;
+}
+let myInterval = setInterval(blinkColors, 1000);
+//blinkColors();
 </script>
 </html>
