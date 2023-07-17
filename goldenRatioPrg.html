@@ -42,7 +42,7 @@ function blinkColors(){
             divTags.style.backgroundColor = colorsArr1[i];
         }
     }
-    blinker++;
+    blinker=Math.floor(Math.random() * 100);
 }
 let myInterval = setInterval(blinkColors, 1000);
 //blinkColors();
