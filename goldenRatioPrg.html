@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golden Ratio Maze</title>
+</head>
+<body id="bodyid">
+</body>
+<script>
+let width = 900;
+let colorsArr=["violet", "indigo", "blue", "green", "yellow", "orange", "red"];
+let colorsArr1=["rgb(255, 126, 255)", "rgb(203, 130, 255)", "rgb(128, 128, 255)", "rgb(127, 255, 127)", "rgb(255, 255, 126)", "rgb(254, 210, 128)", "rgb(255, 124, 124)"];
+let addDivTag = document.getElementById("bodyid");
+let divWidth = 900;
+let divHeight = 555;
+for(let i=0; i<7; i++){
+    let newDivTag = document.createElement("div");
+    newDivTag.id="div"+i;
+    newDivTag.style.width= divWidth + "px";
+    newDivTag.style.height = divHeight + "px";
+    newDivTag.style.backgroundColor = colorsArr[i];
+    addDivTag.appendChild(newDivTag);
+    addDivTag = newDivTag;
+    if(i%2==0){
+        divWidth = Math.floor(+divHeight/1.62);
+    }else{
+        divHeight = Math.floor(divWidth/1.62);
+    }
+}
+</script>
+</html>
