@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>American Flag</title>
+</head>
+<body id="bodyid">
+</body>
+<script>
+let addDivTag = document.getElementById("bodyid");
+let divWidth = 900;
+let divHeight = 555;
+let flagDivTag = document.createElement("div");
+    flagDivTag.id="divFlag";
+    flagDivTag.style.width= divWidth + "px";
+    flagDivTag.style.height= divHeight + "px";
+    flagDivTag.style.position= "relative";
+    addDivTag.appendChild(flagDivTag);
+    addDivTag = flagDivTag;
+    let stripePos = 0;
+
+    divWidth = 425;
+    divHeight = 294;
+    let starFlagDivTag = document.createElement("div");
+    starFlagDivTag.id="divStarFlag";
+    starFlagDivTag.style.width= divWidth + "px";
+    starFlagDivTag.style.height= divHeight + "px";
+    starFlagDivTag.style.position = "absolute";
+    starFlagDivTag.style.backgroundColor = "darkblue";
+    starFlagDivTag.style.verticalAlign = "middle";
+    starFlagDivTag.align = "center";
+    addDivTag.appendChild(starFlagDivTag);
+    addDivTag = flagDivTag;
+    
+    divWidth = 900;
+    divHeight = 555;
+for(let i=0; i<13; i++){
+    let newDivTag = document.createElement("div");
+    newDivTag.id="div"+i;
+    newDivTag.style.width= divWidth + "px";
+    newDivTag.style.height = Math.floor(divHeight/13) + "px";
+    newDivTag.style.top = stripePos + "px";
+    stripePos += Math.floor(divHeight/13);
+    addDivTag.appendChild(newDivTag);
+    if(i%2==0){
+        newDivTag.style.backgroundColor = "red";
+    }else{
+        newDivTag.style.backgroundColor = "white";
+    }
+}
+    addDivTag = starFlagDivTag; 
+
+for(let i=0; i<9; i++){
+    let tableTag = document.createElement("table");
+    tableTag.style.height = "32px";
+    if(i%2 == 0){
+        let rowTag = document.createElement("tr");
+        tableTag.style.width = "100%";
+        for(let j=0; j<6; j++){
+            let cellTag = document.createElement("td");
+            cellTag.innerText = "*";
+            cellTag.style.color = "white";
+            cellTag.style.fontSize = "21px";
+            cellTag.style.fontWeight = "bold";
+            cellTag.align = "center";
+            cellTag.style.verticalAlign = "middle";
+            rowTag.appendChild(cellTag)
+        }
+        tableTag.appendChild(rowTag);
+    }else{
+        let rowTag = document.createElement("tr");
+        for(let j=0; j<5; j++){
+            let cellTag = document.createElement("td");
+            tableTag.style.width = "83%";
+            cellTag.innerText = "*";
+            cellTag.style.color = "white";
+            cellTag.style.fontSize = "21px";
+            cellTag.style.fontWeight = "bold";
+            cellTag.align = "center";
+            cellTag.style.verticalAlign = "middle";
+            rowTag.appendChild(cellTag)
+        }
+        tableTag.appendChild(rowTag);
+    }
+    addDivTag.appendChild(tableTag);
+}
+
+</script>
+</html>
