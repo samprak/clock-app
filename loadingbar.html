@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Bar</title>
+    <style>
+        .div1{
+            width: 500px;
+            height: 10px;
+            background-color: black;
+        }
+    </style>
+</head>
+<body style="font-family: Arial, Helvetica, sans-serif;">
+    <center>
+        <h1>Loading Bar</h1>
+        <button id="loadingBtn" onclick="btnClicked()">Start</button><br><br><br>
+        <div id="div1" class="div1" align="left"></div>
+        <h5 id="loadingPercent"></h5>
+    </center>
+</body>
+<script>
+    let loadingColorBar = 0;
+    let loadingInterval;
+    let on = 0;
+    let secondDiv = document.createElement("div");
+    secondDiv.id = "div2";
+    secondDiv.style.width = "0px";
+    secondDiv.style.height = "10px";
+    secondDiv.style.backgroundColor = "red";
+    let firstDiv = document.getElementById("div1");
+    firstDiv.appendChild(secondDiv);
+    let loadBtn = document.getElementById("loadingBtn");
+    let loadPercent = document.getElementById("loadingPercent");
+
+function loadingBarFill(){
+    secondDiv.style.width = loadingColorBar + "px";
+    loadingColorBar += 2;
+    loadPercent.innerText = Math.floor(loadingColorBar/5) + "%";
+    if(loadingColorBar < 151){
+        secondDiv.style.backgroundColor = "red";
+    }else if(loadingColorBar < 301){
+        secondDiv.style.backgroundColor = "yellow";
+    }else if(loadingColorBar < 500){
+        secondDiv.style.backgroundColor = "green";
+    }else if(loadingColorBar >= 500){
+        clearInterval(loadingInterval);
+        loadingColorBar = 0;
+        on = 0;
+        loadBtn.innerText = "Start Again";
+        loadPercent.innerText = "Loading Complete!";
+        secondDiv.style.width = 0 + "px";
+    }
+}
+
+function btnClicked(){
+    if(!on){
+        loadingInterval = setInterval(loadingBarFill, 500);
+        loadBtn.innerText = "Pause";
+        on = 1;
+     }else{
+        clearInterval(loadingInterval);
+        //loadPercent.innerText = "";
+        loadBtn.innerText = "Resume";
+        on = 0;
+     }
+}
+</script>
+</html>
